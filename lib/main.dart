@@ -1,117 +1,220 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:pprice_ui/ui/product_list_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    home: LoginScreen(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _userNameController, _passwordController;
+  bool _isCorrect, _isObscureText;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _userNameController = new TextEditingController();
+    _passwordController = new TextEditingController();
+
+    _isCorrect = true;
+    _isObscureText = false;
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  void dispose() {
+    super.dispose();
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    _userNameController.dispose();
+    _passwordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            loginScreenBackground(),
+            appLogo(),
+            loginScreenWidgets(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget appLogo() {
+    return Container(
+      alignment: Alignment.topCenter,
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.03,
+      ),
+      child: Image.asset(
+        "images/app_logo.png",
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.3,
+      ),
+    );
+  }
+
+  Widget loginScreenBackground() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Image.asset(
+        "images/login_screen_background.png",
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget loginScreenWidgets() {
+    return Container(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+      alignment: Alignment.center,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Column(
+          children: [
+            loginInputWidget(Icons.account_circle_rounded, "Username",
+                _isObscureText, _userNameController),
+            SizedBox(
+              height: 10.0,
+            ),
+            loginInputWidget(
+                Icons.lock, "Password", !_isObscureText, _passwordController),
+            SizedBox(
+              height: 30.0,
+            ),
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                10.0,
+              )),
+              onPressed: () {
+                if (_userNameController.text.toLowerCase() == "admin" &&
+                    _passwordController.text.toLowerCase() == "1") {
+                  Navigator.of(context).pushReplacement(
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      duration: Duration(milliseconds: 500),
+                      child: ProductListScreen(),
+                    ),
+                  );
+                } else {
+                  setState(() {
+                    _userNameController.clear();
+                    _passwordController.clear();
+                    _isCorrect = false;
+                  });
+                }
+              },
+              height: 50.0,
+              minWidth: 170.0,
+              child: Text(
+                "Đăng nhập",
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Color(0xFFE7ECEF),
+                ),
+              ),
+              color: Color(0xFF274C77),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget loginInputWidget(
+    IconData icon,
+    String hintText,
+    bool isObscureText,
+    TextEditingController _controller,
+  ) {
+    return TextField(
+      controller: _controller,
+      obscureText: isObscureText,
+      style: TextStyle(
+        fontSize: 20.0,
+      ),
+      decoration: InputDecoration(
+        fillColor: Color(0xFFced4da),
+        filled: true,
+        errorText: () {
+          if (_isCorrect)
+            return "";
+          else {
+            return "*Login info is not correct";
+          }
+        }(),
+        errorStyle: TextStyle(
+          fontSize: 20.0,
+          color: Color(0xFFef233c),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 0.0,
+          ),
+          borderRadius: BorderRadius.circular(
+            15.0,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 0.0,
+          ),
+          borderRadius: BorderRadius.circular(
+            15.0,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 0.0,
+          ),
+          borderRadius: BorderRadius.circular(
+            15.0,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: BorderSide(
+            width: 1.0,
+            color: Colors.transparent,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: BorderSide(
+            color: Colors.transparent,
+          ),
+        ),
+        prefixIcon: Icon(
+          icon,
+          color: Color(0xFF343a40),
+        ),
+        hintText: hintText,
+        hintStyle: TextStyle(
+          fontSize: 20.0,
+          color: Color(0xFF6c757d),
+        ),
+      ),
     );
   }
 }
