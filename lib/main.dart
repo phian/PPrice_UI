@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             loginInputWidget(
                 Icons.lock, "Password", !_isObscureText, _passwordController),
             SizedBox(
-              height: 30.0,
+              height: 20.0,
             ),
             MaterialButton(
               shape: RoundedRectangleBorder(
