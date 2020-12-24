@@ -423,10 +423,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         onPressed: () {
                           Navigator.of(context).push(
                             PageTransition(
-                              type: PageTransitionType.size,
+                              type: PageTransitionType.fade,
                               duration: Duration(milliseconds: 200),
                               child: GiaDoiThu(),
-                              alignment: Alignment.center,
                             ),
                           );
                         },
@@ -439,10 +438,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         onPressed: () {
                           Navigator.of(context).push(
                             PageTransition(
-                              type: PageTransitionType.size,
+                              type: PageTransitionType.fade,
                               duration: Duration(milliseconds: 250),
                               child: CapNhatGia(),
-                              alignment: Alignment.center,
                             ),
                           );
                         },
