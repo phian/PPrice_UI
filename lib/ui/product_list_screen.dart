@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pprice_ui/menu_items.dart';
 import 'package:pprice_ui/ui/cap_nhat_gia.dart';
 import 'package:pprice_ui/ui/gia_doi_thu.dart';
+import 'package:pprice_ui/ui/price_history_screen.dart';
 
 class ProductListScreen extends StatefulWidget {
   ProductListScreen({Key key}) : super(key: key);
@@ -55,13 +56,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFE7ECEF),
-        appBar: _productListScreenAppbBar(),
-        body: _prooductListScreenBody(),
-      ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xFFE7ECEF),
+      appBar: _productListScreenAppbBar(),
+      body: _prooductListScreenBody(),
     );
   }
 
@@ -413,7 +412,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             fontSize: 15.0,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 200),
+                              child: PriceHistoryScreen(),
+                            ),
+                          );
+                        },
                       ),
                       MaterialButton(
                         child: Text("Giá thị trường",
