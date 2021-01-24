@@ -47,7 +47,7 @@ class _GiaDoiThuState extends State<GiaDoiThu> {
       vertical: false,
       barRendererDecorator: charts.BarLabelDecorator<String>(
         insideLabelStyleSpec: charts.TextStyleSpec(
-          fontSize: 20,
+          fontSize: 18,
           color: charts.MaterialPalette.white,
         ),
       ),
@@ -242,8 +242,13 @@ class _GiaDoiThuState extends State<GiaDoiThu> {
 
   Widget chart(charts.BarChart chart) {
     return Container(
-      padding: EdgeInsets.only(bottom: 25, left: 10),
+      padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+      margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
       height: 400,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
       width: double.infinity,
       child: chart,
     );
