@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final double _height = 185.0;
+  final double _height = 170.0;
   String tenSP;
   String giaNiemYet;
   String sKU;
   String giaGoc;
-  String ngayApDung;
 
   CustomAppBar({
     this.tenSP,
     this.giaNiemYet,
     this.sKU,
     this.giaGoc,
-    this.ngayApDung,
   });
 
   @override
@@ -25,6 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       color: Color(0xFF274C77),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
@@ -49,6 +48,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             ],
           ),
+          SizedBox(height: 5),
           Text(
             'Giá niêm yết',
             style: TextStyle(
@@ -64,24 +64,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Colors.white,
             ),
           ),
-          Text(
-            '(' + ngayApDung + ')',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white60,
-            ),
-          ),
           Padding(
-            padding: EdgeInsets.only(top: 15, left: 8, right: 8),
+            padding: EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 5),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                    'SKU: ' + sKU,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'SKU: ' + sKU,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
                   ),
                 ),
                 Text(

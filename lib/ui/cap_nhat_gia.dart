@@ -30,7 +30,6 @@ class CapNhatGiaState extends State<CapNhatGia> {
         appBar: CustomAppBar(
           tenSP: 'Áo sơ mi',
           giaNiemYet: '500.000 VNĐ',
-          ngayApDung: '08/11/2020',
           sKU: 'ABZ982',
           giaGoc: '400.000 VNĐ',
         ),
