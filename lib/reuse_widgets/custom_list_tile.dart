@@ -5,14 +5,18 @@ class CompetitorPriceTile extends StatelessWidget {
   final CompetitorPrice competitorPrice;
   final int giahientai;
   double phantram;
+  String dau;
 
   CompetitorPriceTile(this.competitorPrice, this.giahientai) {
     phantram = (giahientai / competitorPrice.price).toDouble();
 
-    if (giahientai > competitorPrice.price)
+    if (giahientai > competitorPrice.price) {
       phantram = (phantram - 1) * 100;
-    else
+      dau = '-';
+    } else {
       phantram = (1 - phantram) * 100;
+      dau = '+';
+    }
   }
 
   @override
@@ -44,7 +48,7 @@ class CompetitorPriceTile extends StatelessWidget {
           SizedBox(
             width: 40,
             child: Text(
-              phantram.toStringAsFixed(0) + '%',
+              dau + phantram.toStringAsFixed(0) + '%',
               textAlign: TextAlign.end,
               style: TextStyle(
                 fontSize: 15,
