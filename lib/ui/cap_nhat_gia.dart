@@ -451,6 +451,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
                       message: "Đã xoá lịch cập nhật",
                       alertStyle: AdaptiveStyle.material,
                     );
+                    setState(() {});
                   },
                   child: Container(
                     decoration: BoxDecoration(

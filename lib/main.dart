@@ -4,7 +4,7 @@ import 'package:pprice_ui/ui/product_list_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: ProductListScreen(),
+    home: LoginScreen(),
     debugShowCheckedModeBanner: false,
   ));
 }
@@ -82,22 +82,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget loginScreenWidgets() {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.47,
+        left: 37.0,
+        right: 37.0,
+      ),
       alignment: Alignment.center,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
         height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
             loginInputWidget(Icons.account_circle_rounded, "Username",
                 _isObscureText, _userNameController),
-            SizedBox(
-              height: 10.0,
-            ),
-            loginInputWidget(
-                Icons.lock, "Password", !_isObscureText, _passwordController),
-            SizedBox(
-              height: 20.0,
+            Container(
+              transform: Matrix4.translationValues(0.0, -10.0, 0.0),
+              child: loginInputWidget(
+                  Icons.lock, "Password", !_isObscureText, _passwordController),
             ),
             MaterialButton(
               shape: RoundedRectangleBorder(
