@@ -17,6 +17,7 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   TextEditingController _searchBoxController;
+  String _searchText;
 
   List<String> _productNames,
       _productSKUs,
@@ -36,7 +37,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   void initState() {
     super.initState();
-
+    _searchText = "";
     _searchBoxController = new TextEditingController();
     _initProductInfos();
     _totalProducts = _productNames.length;
@@ -112,6 +113,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
       child: SimpleAutoCompleteTextField(
         key: _searchBoxKey,
+        textChanged: (value) {
+          setState(() {
+            _searchText = value;
+          });
+        },
         controller: _searchBoxController,
         style: TextStyle(
           fontSize: 22.0,
@@ -286,20 +292,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
   ) {
     return Visibility(
       visible: () {
-        if (_searchBoxController.text == null ||
-            _searchBoxController.text == "") {
+        if (_searchText == null || _searchText == "") {
           return true;
         }
 
-        if (productName
-                .toLowerCase()
-                .contains(_searchBoxController.text.toLowerCase()) ||
-            productSKU
-                .toLowerCase()
-                .contains(_searchBoxController.text.toLowerCase()) ||
-            productProducer
-                .toLowerCase()
-                .contains(_searchBoxController.text.toLowerCase())) {
+        if (productName.toLowerCase().contains(_searchText.toLowerCase()) ||
+            productSKU.toLowerCase().contains(_searchText.toLowerCase()) ||
+            productProducer.toLowerCase().contains(_searchText.toLowerCase())) {
           return true;
         }
         return false;

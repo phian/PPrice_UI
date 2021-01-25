@@ -255,27 +255,18 @@ class CapNhatGiaState extends State<CapNhatGia> {
                   ],
                 ),
               ),
-              () {
+              ...List.generate(_priceUpdateRows.length * 2, (index) {
                 if (_priceUpdateRows.length == 0) {
                   return Container();
-                } else {
-                  for (int i = 0; i < _priceUpdateRows.length; i++) {
-                    return _priceUpdateRows[i];
-                  }
                 }
-              }(),
-              () {
-                if (_priceUpdateRows.length == 0) {
-                  return Container();
-                } else {
-                  for (int i = 0; i < _priceUpdateRows.length; i++) {
-                    return Container(
-                      height: 1.0,
-                      color: Colors.grey,
-                    );
-                  }
+                if (index % 2 == 0) {
+                  return _priceUpdateRows[(index / 2).toInt()];
                 }
-              }(),
+                return Container(
+                  height: 1.0,
+                  color: Colors.grey,
+                );
+              }),
             ],
           ),
         ),
