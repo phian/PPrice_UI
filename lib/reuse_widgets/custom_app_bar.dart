@@ -73,14 +73,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             transform: Matrix4.translationValues(0.0, -5.0, 0.0),
             padding: EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                    'SKU: ' + sKU,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'SKU: ' + sKU,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
                   ),
                 ),
                 Text(

@@ -4,7 +4,7 @@ import 'package:pprice_ui/ui/product_list_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: LoginScreen(),
+    home: ProductListScreen(),
     debugShowCheckedModeBanner: false,
   ));
 }
