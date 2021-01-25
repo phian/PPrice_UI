@@ -207,7 +207,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
               _saveUpdateCalendar();
             },
             child: Text(
-              "Cập nhật",
+              "Đặt lịch",
               style: TextStyle(
                 fontSize: 22.0,
                 color: Colors.white,
