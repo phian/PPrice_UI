@@ -1,22 +1,25 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:pprice_ui/product.dart';
 import 'package:pprice_ui/reuse_widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class CapNhatGia extends StatefulWidget {
+  final Product product;
+  CapNhatGia({this.product});
   @override
   CapNhatGiaState createState() => CapNhatGiaState();
 }
 
 class CapNhatGiaState extends State<CapNhatGia> {
+  Product _product;
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('dd/MM/yyyy');
-  NumberFormat _priceFormat = NumberFormat("#,##0.000", "vi_VN");
   String datePicked = formatter.format(now);
-  String _selectedDate, _selectedTime = null;
-  TextEditingController _newPriceController;
+  String _selectedDate, _selectedTime;
 
-  final textController = MaskedTextController(mask: '000.000.000.000');
+  final textController = MaskedTextController(mask: '000.000.000.000.000');
   var controller;
 
   List<Widget> _priceUpdateRows;
@@ -24,14 +27,15 @@ class CapNhatGiaState extends State<CapNhatGia> {
   @override
   void initState() {
     super.initState();
+    _product = widget.product;
     _selectedDate = formatter.format(DateTime.now());
+    _selectedTime = null;
     controller = new MoneyMaskedTextController(
       thousandSeparator: '.',
       decimalSeparator: '',
       initialValue: 0,
       precision: 0,
     );
-    _newPriceController = TextEditingController();
     _priceUpdateRows = [];
   }
 
@@ -49,10 +53,10 @@ class CapNhatGiaState extends State<CapNhatGia> {
   /// [App Bar]
   Widget _priceUpdateScreenAppBar() {
     return CustomAppBar(
-      tenSP: 'Áo sơ mi',
-      giaNiemYet: '500.000 VNĐ',
-      sKU: 'ABZ982',
-      giaGoc: '400.000 VNĐ',
+      tenSP: _product.productName,
+      giaNiemYet: _product.productListedPrices + " VNĐ",
+      sKU: _product.productSKU,
+      giaGoc: _product.productOriginalPrice + ' VNĐ',
     );
   }
 
@@ -88,21 +92,19 @@ class CapNhatGiaState extends State<CapNhatGia> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.52,
                       height: 50.0,
+                      padding: EdgeInsets.only(bottom: 10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Color(0xBBE5E5E5),
+                      ),
                       child: TextField(
                         maxLines: 1,
-                        onChanged: (value) {
-                          _newPriceController.text = _priceFormat.format(
-                            int.parse(
-                              _newPriceController.text.toString(),
-                            ),
-                          );
-                        },
-                        controller: _newPriceController,
+                        onChanged: (value) {},
+                        controller: textController,
                         style: TextStyle(fontSize: 20.0),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          fillColor: Color(0xBBE5E5E5),
-                          filled: true,
+                          fillColor: Colors.transparent,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide.none,
@@ -201,7 +203,9 @@ class CapNhatGiaState extends State<CapNhatGia> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            onPressed: () {},
+            onPressed: () {
+              _saveUpdateCalendar();
+            },
             child: Text(
               "Cập nhật",
               style: TextStyle(
@@ -213,7 +217,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
         ),
         Container(
           margin: EdgeInsets.only(top: 40.0),
-          height: 91.0 * 3,
+          height: (_priceUpdateRows.length + 2) * 91.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             color: Colors.white,
@@ -251,79 +255,27 @@ class CapNhatGiaState extends State<CapNhatGia> {
                   ],
                 ),
               ),
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                height: 90.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.02,
-                      ),
-                      child: Text(
-                        "15/01/2021\n 10:00 AM",
-                        style: TextStyle(fontSize: 15.0),
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        "600.000\n (+10%)",
-                        style: TextStyle(fontSize: 15.0),
-                      ),
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.055,
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            transform:
-                                Matrix4.translationValues(-10.0, 0.0, 0.0),
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Color(0xFF274C77),
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                alignment: Alignment.center,
-                                width: 100.0,
-                                height: 35.0,
-                                child: Text(
-                                  "Áp dụng ngay",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC6283D),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              alignment: Alignment.center,
-                              width: 50.0,
-                              height: 35.0,
-                              child: Text(
-                                "Xoá",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 1.0,
-                color: Colors.grey,
-              ),
+              () {
+                if (_priceUpdateRows.length == 0) {
+                  return Container();
+                } else {
+                  for (int i = 0; i < _priceUpdateRows.length; i++) {
+                    return _priceUpdateRows[i];
+                  }
+                }
+              }(),
+              () {
+                if (_priceUpdateRows.length == 0) {
+                  return Container();
+                } else {
+                  for (int i = 0; i < _priceUpdateRows.length; i++) {
+                    return Container(
+                      height: 1.0,
+                      color: Colors.grey,
+                    );
+                  }
+                }
+              }(),
             ],
           ),
         ),
@@ -362,8 +314,69 @@ class CapNhatGiaState extends State<CapNhatGia> {
     });
   }
 
+  /// [Save update calendar method]
+  void _saveUpdateCalendar() {
+    if (textController.text == null || textController.text.isEmpty) {
+      showOkAlertDialog(
+        context: context,
+        title: 'Thông báo',
+        message: "Vui lòng nhập giá mới cho sản phẩm",
+        alertStyle: AdaptiveStyle.material,
+      );
+      return;
+    }
+
+    /// [Nếu chọn thời điểm hiện tại]
+    if (formatter.format(DateTime.now()) == _selectedDate &&
+        TimeOfDay.now().format(context) == _selectedTime) {
+      setState(() {
+        _product.productListedPrices = textController.text;
+        textController.text = "";
+      });
+      showOkAlertDialog(
+        context: context,
+        title: 'Thông báo',
+        message: "Cập nhật giá thành công",
+        alertStyle: AdaptiveStyle.material,
+      );
+      return;
+    }
+
+    /// [Nếu ko phải chọn ngày hiện tại thì cho vào hàng chờ]
+    setState(() {
+      double percent;
+      int newPrice, oldPrice;
+      bool isDown = false;
+      oldPrice = int.parse(
+        widget.product.productListedPrices.replaceAll(".", ""),
+      );
+      newPrice = int.parse(
+        textController.text.replaceAll(".", ""),
+      );
+      percent = (newPrice / oldPrice);
+      if (percent < 1) {
+        percent = (oldPrice / newPrice);
+        isDown = true;
+      }
+
+      _priceUpdateRows.add(_priceUpdateCalendarRow(
+        index: _priceUpdateRows.length,
+        updateDate: _selectedDate,
+        updateTime: _selectedTime,
+        updatePrice: textController.text,
+        percent: percent.toString().length > 4
+            ? percent.toString().substring(0, 4)
+            : percent.toString(),
+        updatePriceColor:
+            isDown == false ? Color(0xFF274C77) : Color(0xFFF51818),
+      ));
+      textController.text = "";
+    });
+  }
+
   /// [Widget chứA các thông tin về lịch cập nhật giá]
   Widget _priceUpdateCalendarRow({
+    int index,
     String updateDate,
     String updateTime,
     String updatePrice,
@@ -384,17 +397,18 @@ class CapNhatGiaState extends State<CapNhatGia> {
             child: Text(
               "$updateDate\n $updateTime",
               style: TextStyle(
-                color: updatePriceColor,
                 fontSize: 15.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
           Container(
             child: Text(
-              "$updatePrice\n ($percent)",
+              "$updatePrice\n$percent%",
               style: TextStyle(
                 color: updatePriceColor,
                 fontSize: 15.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
             padding: EdgeInsets.only(
@@ -407,7 +421,18 @@ class CapNhatGiaState extends State<CapNhatGia> {
                 Container(
                   transform: Matrix4.translationValues(-10.0, 0.0, 0.0),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _product.productListedPrices = updatePrice;
+                        _priceUpdateRows.removeAt(index);
+                      });
+                      showOkAlertDialog(
+                        context: context,
+                        title: 'Thông báo',
+                        message: "Cập nhật giá thành công",
+                        alertStyle: AdaptiveStyle.material,
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           color: Color(0xFF274C77),
@@ -423,7 +448,17 @@ class CapNhatGiaState extends State<CapNhatGia> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      _priceUpdateRows.removeAt(index);
+                    });
+                    showOkAlertDialog(
+                      context: context,
+                      title: 'Thông báo',
+                      message: "Đã xoá lịch cập nhật",
+                      alertStyle: AdaptiveStyle.material,
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFC6283D),

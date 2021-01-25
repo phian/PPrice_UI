@@ -3,6 +3,7 @@ import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pprice_ui/menu_items.dart';
+import 'package:pprice_ui/product.dart';
 import 'package:pprice_ui/ui/cap_nhat_gia.dart';
 import 'package:pprice_ui/ui/gia_doi_thu.dart';
 import 'package:pprice_ui/ui/price_history_screen.dart';
@@ -64,7 +65,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 
-  // App Bar
+  /// [App Bar]
   Widget _productListScreenAppbBar() {
     return AppBar(
       backgroundColor: Color(0xFF274C77),
@@ -85,7 +86,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
   //==========================================================================//
 
-  // Body
+  /// [Body]
   Widget _prooductListScreenBody() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,7 +263,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 _productSKUs[index],
                 _productAmounts[index],
                 _productOriginalPrices[index],
-                _productListedPrices[index]);
+                _productListedPrices[index],
+                _productProducer[index]);
           },
           separatorBuilder: (context, index) {
             return SizedBox(
@@ -280,185 +282,216 @@ class _ProductListScreenState extends State<ProductListScreen> {
     String productAmount,
     String orignalPrice,
     String listedPrice,
+    String productProducer,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          20.0,
+    return Visibility(
+      visible: () {
+        if (_searchBoxController.text == null ||
+            _searchBoxController.text == "") {
+          return true;
+        }
+
+        if (productName
+                .toLowerCase()
+                .contains(_searchBoxController.text.toLowerCase()) ||
+            productSKU
+                .toLowerCase()
+                .contains(_searchBoxController.text.toLowerCase()) ||
+            productProducer
+                .toLowerCase()
+                .contains(_searchBoxController.text.toLowerCase())) {
+          return true;
+        }
+        return false;
+      }(),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            20.0,
+          ),
         ),
-      ),
-      height: MediaQuery.of(context).size.height * 0.26,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-              top: 15.0,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text(
-                    _productNames[index],
+        height: MediaQuery.of(context).size.height * 0.26,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                left: 15.0,
+                right: 15.0,
+                top: 15.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Text(
+                      _productNames[index],
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "robotoslab",
+                      ),
+                      maxLines: 2,
+                    ),
+                  ),
+                  Text(
+                    "SL: " + _productAmounts[index],
                     style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
                       fontFamily: "robotoslab",
                     ),
-                    maxLines: 2,
                   ),
-                ),
-                Text(
-                  "SL: " + _productAmounts[index],
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: "robotoslab",
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-              top: 3.0,
-              left: 15.0,
-            ),
-            child: Text(
-              _productSKUs[index] + " - " + _productProducer[index],
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Color(0xFF6E6E6E),
+                ],
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-              top: 15.0,
-              left: 15.0,
-              right: 15.0,
+            Container(
+              padding: EdgeInsets.only(
+                top: 3.0,
+                left: 15.0,
+              ),
+              child: Text(
+                _productSKUs[index] + " - " + _productProducer[index],
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Color(0xFF6E6E6E),
+                ),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Giá gốc: ",
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontFamily: "robotoslab",
-                          color: Color(0xFF274C77),
-                        ),
-                      ),
-                      Text(
-                        _productOriginalPrices[index],
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontFamily: "robotoslab",
-                          color: Color(0xFF274C77),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 7.0,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Giá niêm yết: ",
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontFamily: "robotoslab",
-                          color: Color(0xFFDA1E37),
-                        ),
-                      ),
-                      Text(
-                        _productListedPrices[index],
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontFamily: "robotoslab",
-                          color: Color(0xFFDA1E37),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 12.0,
-                ),
-                Divider(
-                  thickness: 0.8,
-                  height: 0.0,
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MaterialButton(
-                        child: Text(
-                          "Lịch sử giá",
+            Container(
+              padding: EdgeInsets.only(
+                top: 15.0,
+                left: 15.0,
+                right: 15.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Giá gốc: ",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 22.0,
+                            fontFamily: "robotoslab",
+                            color: Color(0xFF274C77),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 200),
-                              child: PriceHistoryScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      MaterialButton(
-                        child: Text("Giá thị trường",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                            )),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 200),
-                              child: GiaDoiThu(),
-                            ),
-                          );
-                        },
-                      ),
-                      MaterialButton(
-                        child: Text("Cập nhật giá",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                            )),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 250),
-                              child: CapNhatGia(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                        Text(
+                          _productOriginalPrices[index],
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontFamily: "robotoslab",
+                            color: Color(0xFF274C77),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 7.0,
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Giá niêm yết: ",
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontFamily: "robotoslab",
+                            color: Color(0xFFDA1E37),
+                          ),
+                        ),
+                        Text(
+                          _productListedPrices[index],
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontFamily: "robotoslab",
+                            color: Color(0xFFDA1E37),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    height: 0.0,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        MaterialButton(
+                          child: Text(
+                            "Lịch sử giá",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                duration: Duration(milliseconds: 200),
+                                child: PriceHistoryScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("Giá thị trường",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              )),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                duration: Duration(milliseconds: 200),
+                                child: GiaDoiThu(),
+                              ),
+                            );
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("Cập nhật giá",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              )),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                duration: Duration(milliseconds: 250),
+                                child: CapNhatGia(
+                                  product: Product(
+                                    productName: _productNames[index],
+                                    productListedPrices:
+                                        _productListedPrices[index],
+                                    productOriginalPrice:
+                                        _productOriginalPrices[index],
+                                    productSKU: _productSKUs[index],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

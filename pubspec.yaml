@@ -35,6 +35,7 @@ dependencies:
   intl: ^0.16.1
   flutter_masked_text: ^0.8.0
   fl_chart: ^0.12.2
+  adaptive_dialog: ^0.9.3
 
 dev_dependencies:
   flutter_test:
