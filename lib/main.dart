@@ -95,10 +95,11 @@ class _LoginScreenState extends State<LoginScreen> {
             loginInputWidget(Icons.account_circle_rounded, "Username",
                 _isObscureText, _userNameController),
             Container(
-              transform: Matrix4.translationValues(0.0, -10.0, 0.0),
+              transform: Matrix4.translationValues(0.0, -0.0, 0.0),
               child: loginInputWidget(
                   Icons.lock, "Password", !_isObscureText, _passwordController),
             ),
+            SizedBox(height: 20.0),
             MaterialButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
