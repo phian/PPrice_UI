@@ -255,6 +255,8 @@ class CapNhatGiaState extends State<CapNhatGia> {
                   ],
                 ),
               ),
+
+              // Generate calendar cards
               ...List.generate(_priceUpdateRows.length * 2, (index) {
                 if (_priceUpdateRows.length == 0) {
                   return Container();
