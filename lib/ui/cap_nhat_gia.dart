@@ -23,6 +23,8 @@ class CapNhatGiaState extends State<CapNhatGia> {
   var controller;
 
   List<Widget> _priceUpdateRows;
+  List<String> _updateTimes, _updateDates, _updatePrices, _percents;
+  List<bool> _isDowns;
 
   @override
   void initState() {
@@ -37,6 +39,11 @@ class CapNhatGiaState extends State<CapNhatGia> {
       precision: 0,
     );
     _priceUpdateRows = [];
+    _updateDates = [];
+    _updateTimes = [];
+    _updatePrices = [];
+    _percents = [];
+    _isDowns = [];
   }
 
   @override
@@ -352,6 +359,12 @@ class CapNhatGiaState extends State<CapNhatGia> {
         isDown = true;
       }
 
+      _updateDates.add(_selectedDate);
+      _updateTimes.add(_selectedTime);
+      _updatePrices.add(textController.text);
+      _percents.add(percent.toString());
+      _isDowns.add(isDown);
+
       _priceUpdateRows.add(_priceUpdateCalendarRow(
         index: _priceUpdateRows.length,
         updateDate: _selectedDate,
@@ -388,7 +401,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
               left: MediaQuery.of(context).size.width * 0.02,
             ),
             child: Text(
-              "$updateDate\n $updateTime",
+              "$updateDate\n$updateTime",
               style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w500,
@@ -444,6 +457,13 @@ class CapNhatGiaState extends State<CapNhatGia> {
                   onTap: () {
                     setState(() {
                       _priceUpdateRows.removeAt(index);
+                      _updateDates.removeAt(index);
+                      _updateTimes.removeAt(index);
+                      _updatePrices.removeAt(index);
+                      _percents.removeAt(index);
+                      _isDowns.removeAt(index);
+
+                      _resetUpdateCalendarList();
                     });
                     showOkAlertDialog(
                       context: context,
@@ -451,7 +471,6 @@ class CapNhatGiaState extends State<CapNhatGia> {
                       message: "Đã xoá lịch cập nhật",
                       alertStyle: AdaptiveStyle.material,
                     );
-                    setState(() {});
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -473,5 +492,21 @@ class CapNhatGiaState extends State<CapNhatGia> {
         ],
       ),
     );
+  }
+
+  void _resetUpdateCalendarList() {
+    if (_priceUpdateRows.length != 0) {
+      for (int i = 0; i < _priceUpdateRows.length; i++) {
+        _priceUpdateRows[i] = _priceUpdateCalendarRow(
+          index: i,
+          updateDate: _updateDates[i],
+          updateTime: _updateTimes[i],
+          updatePrice: _updatePrices[i],
+          percent: _percents[i],
+          updatePriceColor:
+              _isDowns[i] == false ? Color(0xFF274C77) : Color(0xFFF51818),
+        );
+      }
+    }
   }
 }
