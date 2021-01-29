@@ -488,7 +488,7 @@ class _PriceHistoryScreenState extends State<PriceHistoryScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.11,
+                    left: MediaQuery.of(context).size.width * 0.05,
                   ),
                   child: Row(
                     children: [

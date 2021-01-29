@@ -432,12 +432,6 @@ class CapNhatGiaState extends State<CapNhatGia> {
                         _product.productListedPrices = updatePrice;
                         _priceUpdateRows.removeAt(index);
                       });
-                      showOkAlertDialog(
-                        context: context,
-                        title: 'Thông báo',
-                        message: "Cập nhật giá thành công",
-                        alertStyle: AdaptiveStyle.material,
-                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -465,12 +459,6 @@ class CapNhatGiaState extends State<CapNhatGia> {
 
                       _resetUpdateCalendarList();
                     });
-                    showOkAlertDialog(
-                      context: context,
-                      title: 'Thông báo',
-                      message: "Đã xoá lịch cập nhật",
-                      alertStyle: AdaptiveStyle.material,
-                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
