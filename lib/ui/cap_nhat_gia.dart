@@ -431,6 +431,13 @@ class CapNhatGiaState extends State<CapNhatGia> {
                       setState(() {
                         _product.productListedPrices = updatePrice;
                         _priceUpdateRows.removeAt(index);
+                        _updateDates.removeAt(index);
+                        _updateTimes.removeAt(index);
+                        _updatePrices.removeAt(index);
+                        _percents.removeAt(index);
+                        _isDowns.removeAt(index);
+
+                        _resetUpdateCalendarList();
                       });
                     },
                     child: Container(
