@@ -25,6 +25,8 @@ class CapNhatGiaState extends State<CapNhatGia> {
   List<Widget> _priceUpdateRows;
   List<String> _updateTimes, _updateDates, _updatePrices, _percents;
   List<bool> _isDowns;
+  DateTime _selectedDateTime;
+  TimeOfDay _selectedTimeOfDay;
 
   @override
   void initState() {
@@ -32,6 +34,8 @@ class CapNhatGiaState extends State<CapNhatGia> {
     _product = widget.product;
     _selectedDate = formatter.format(DateTime.now());
     _selectedTime = null;
+    _selectedDateTime = DateTime.now();
+    _selectedTimeOfDay = TimeOfDay.now();
     controller = new MoneyMaskedTextController(
       thousandSeparator: '.',
       decimalSeparator: '',
@@ -206,7 +210,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
             horizontal: MediaQuery.of(context).size.width * 0.12,
           ),
           child: FlatButton(
-            color: Color(0xFF274C77),
+            color: Color(0xFF0FA958),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -225,41 +229,52 @@ class CapNhatGiaState extends State<CapNhatGia> {
         Container(
           margin: EdgeInsets.only(top: 40.0),
           height: (_priceUpdateRows.length + 2) * 91.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.white,
-          ),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(10.0),
+          //   color: Colors.white,
+          // ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 20.0),
+              //   height: 90.0,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.only(
+              //       topLeft: Radius.circular(10.0),
+              //       topRight: Radius.circular(10.0),
+              //     ),
+              //     color: Color(0xFFDADADA),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         "TG áp\n dụng",
+              //         style: TextStyle(fontSize: 20.0),
+              //       ),
+              //       Container(
+              //         child: Text(
+              //           "Mức giá \n (VNĐ)",
+              //           style: TextStyle(fontSize: 20.0),
+              //         ),
+              //       ),
+              //       Text(
+              //         "Thao tác",
+              //         style: TextStyle(fontSize: 20.0),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                height: 90.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
+                margin: EdgeInsets.only(bottom: 10.0),
+                child: Text(
+                  "Danh sách lịch cập nhật",
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  color: Color(0xFFDADADA),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "TG áp\n dụng",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    Container(
-                      child: Text(
-                        "Mức giá \n (VNĐ)",
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    ),
-                    Text(
-                      "Thao tác",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ],
                 ),
               ),
 
@@ -287,7 +302,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
   void _showApllyDatePicker() async {
     await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDateTime,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(
         Duration(days: 10000),
@@ -295,6 +310,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
     ).then((value) {
       if (value != null)
         setState(() {
+          _selectedDateTime = value;
           _selectedDate = formatter.format(value);
         });
     });
@@ -304,10 +320,11 @@ class CapNhatGiaState extends State<CapNhatGia> {
   void _showApplyTimePicker() async {
     await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: _selectedTimeOfDay,
     ).then((value) {
       if (value != null) {
         setState(() {
+          _selectedTimeOfDay = value;
           _selectedTime = value.format(context);
         });
       }
@@ -374,7 +391,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
             ? percent.toString().substring(0, 4)
             : percent.toString(),
         updatePriceColor:
-            isDown == false ? Color(0xFF274C77) : Color(0xFFF51818),
+            isDown == false ? Color(0xFF35892D) : Color(0xFFF51818),
       ));
       textController.text = "";
     });
@@ -410,7 +427,9 @@ class CapNhatGiaState extends State<CapNhatGia> {
           ),
           Container(
             child: Text(
-              "$updatePrice\n$percent%",
+              updatePriceColor == Color(0xFF35892D)
+                  ? "$updatePrice\n+$percent%"
+                  : "$updatePrice\n-$percent%",
               style: TextStyle(
                 color: updatePriceColor,
                 fontSize: 15.0,
@@ -442,7 +461,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xFF274C77),
+                          color: Color(0xFF0380FC),
                           borderRadius: BorderRadius.circular(5.0)),
                       alignment: Alignment.center,
                       width: 100.0,

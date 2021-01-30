@@ -180,7 +180,7 @@ class _PriceHistoryScreenState extends State<PriceHistoryScreen> {
   Widget _priceHistoryScreenAppBar() {
     return AppBar(
       centerTitle: true,
-      backgroundColor: Color(0xFF274C77),
+      backgroundColor: Color(0xFF363740),
       elevation: 0.0,
       title: Text(
         "Lịch sử giá",

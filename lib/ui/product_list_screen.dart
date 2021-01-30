@@ -69,7 +69,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   /// [App Bar]
   Widget _productListScreenAppbBar() {
     return AppBar(
-      backgroundColor: Color(0xFF274C77),
+      backgroundColor: Color(0xFF363740),
       title: Text(
         "Danh sách sản phẩm",
         style: TextStyle(

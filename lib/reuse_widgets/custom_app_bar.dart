@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top,
       ),
-      color: Color(0xFF274C77),
+      color: Color(0xFF363740),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

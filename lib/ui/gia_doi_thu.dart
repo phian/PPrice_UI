@@ -99,7 +99,7 @@ class _GiaDoiThuState extends State<GiaDoiThu> {
                       ),
                     ),
                     onPressed: () {},
-                    color: Color(0xFF274C77),
+                    color: Color(0xFF363740),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
