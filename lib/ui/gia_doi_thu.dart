@@ -54,152 +54,150 @@ class _GiaDoiThuState extends State<GiaDoiThu> {
       domainAxis: charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
     );
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xFFE7ECEF),
-        appBar: CustomAppBar(
-          tenSP: 'Áo sơ mi',
-          giaNiemYet: '500.000 VNĐ',
-          sKU: 'ABZ982',
-          giaGoc: '400.000 VNĐ',
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              height: 65,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'URL...',
-                          border: InputBorder.none,
-                        ),
-                      ),
+    return Scaffold(
+      backgroundColor: Color(0xFFE7ECEF),
+      appBar: CustomAppBar(
+        tenSP: 'Áo sơ mi',
+        giaNiemYet: '500.000 VNĐ',
+        sKU: 'ABZ982',
+        giaGoc: '400.000 VNĐ',
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            height: 65,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                  ),
-                  RaisedButton(
-                    child: Text(
-                      'Thêm',
+                    child: TextField(
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'URL...',
+                        border: InputBorder.none,
                       ),
                     ),
-                    onPressed: () {},
-                    color: Color(0xFF363740),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                RaisedButton(
+                  child: Text(
+                    'Thêm',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
                   ),
-                ],
+                  onPressed: () {},
+                  color: Color(0xFF363740),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                width: MediaQuery.of(context).size.width * 0.45,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Thấp nhất',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text(
+                      'Shoppe',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '475.000 VNĐ',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Thấp nhất',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'Shoppe',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '475.000 VNĐ',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.white,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Cao nhất',
-                        style: TextStyle(fontSize: 16),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                width: MediaQuery.of(context).size.width * 0.45,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Cao nhất',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      'Amazone',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        'Amazone',
-                        style: TextStyle(
+                    ),
+                    Text(
+                      '525.000 VNĐ',
+                      style: TextStyle(
+                          color: Colors.green,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '525.000 VNĐ',
-                        style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text('Cập nhật vào 5 phút trước'),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                FlatButton(
-                  onPressed: () {
-                    if (viewChart == true)
-                      viewChart = false;
-                    else
-                      viewChart = true;
-                    setState(() {});
-                  },
-                  child: Icon(Icons.swap_horiz),
-                  minWidth: 30,
-                  shape: CircleBorder(),
-                )
-              ],
-            ),
-            Expanded(
-              child: viewChart == false ? listView() : chart(barchart),
-            ),
-          ],
-        ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text('Cập nhật vào 5 phút trước'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  if (viewChart == true)
+                    viewChart = false;
+                  else
+                    viewChart = true;
+                  setState(() {});
+                },
+                child: Icon(Icons.swap_horiz),
+                minWidth: 30,
+                shape: CircleBorder(),
+              )
+            ],
+          ),
+          Expanded(
+            child: viewChart == false ? listView() : chart(barchart),
+          ),
+        ],
       ),
     );
   }

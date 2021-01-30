@@ -229,44 +229,9 @@ class CapNhatGiaState extends State<CapNhatGia> {
         Container(
           margin: EdgeInsets.only(top: 40.0),
           height: (_priceUpdateRows.length + 2) * 91.0,
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(10.0),
-          //   color: Colors.white,
-          // ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-              //   height: 90.0,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.only(
-              //       topLeft: Radius.circular(10.0),
-              //       topRight: Radius.circular(10.0),
-              //     ),
-              //     color: Color(0xFFDADADA),
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(
-              //         "TG áp\n dụng",
-              //         style: TextStyle(fontSize: 20.0),
-              //       ),
-              //       Container(
-              //         child: Text(
-              //           "Mức giá \n (VNĐ)",
-              //           style: TextStyle(fontSize: 20.0),
-              //         ),
-              //       ),
-              //       Text(
-              //         "Thao tác",
-              //         style: TextStyle(fontSize: 20.0),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
               Container(
                 margin: EdgeInsets.only(bottom: 10.0),
                 child: Text(
@@ -516,7 +481,9 @@ class CapNhatGiaState extends State<CapNhatGia> {
           updateDate: _updateDates[i],
           updateTime: _updateTimes[i],
           updatePrice: _updatePrices[i],
-          percent: _percents[i],
+          percent: _percents[i].toString().length > 4
+              ? _percents[i].toString().substring(0, 4)
+              : _percents[i].toString(),
           updatePriceColor:
               _isDowns[i] == false ? Color(0xFF274C77) : Color(0xFFF51818),
         );
