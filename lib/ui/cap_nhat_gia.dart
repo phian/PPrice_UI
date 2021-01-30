@@ -485,7 +485,7 @@ class CapNhatGiaState extends State<CapNhatGia> {
               ? _percents[i].toString().substring(0, 4)
               : _percents[i].toString(),
           updatePriceColor:
-              _isDowns[i] == false ? Color(0xFF274C77) : Color(0xFFF51818),
+              _isDowns[i] == false ? Color(0xFF35892D) : Color(0xFFF51818),
         );
       }
     }
