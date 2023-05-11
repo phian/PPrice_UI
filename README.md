@@ -1,3 +1,3 @@
 # pprice_ui
 
-A simple UI project with UI/UX research implement for human-machine communication subject.
+A simple UI project with _**UI/UX**_ research implement for _**human-machine communication subject**_.
